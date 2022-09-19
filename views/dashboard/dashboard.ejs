@@ -1,0 +1,244 @@
+<div class="page-heading">
+	<h3>Dashboard</h3>
+</div>
+<div class="page-content">
+	<%- include('../layouts/alert') %>
+	<section class="row">
+		<div class="col-12 col-lg-9">
+			<div class="row">
+				<div class="col-6 col-lg-12 col-md-6">
+					<div class="card">
+						<div class="card-body px-4 py-4-5">
+							<img class="card-img-top img-fluid" src="image/Banner.png" alt="foto bg" />
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4>Logs Session</h4>
+							<div class="divider">
+								<div id="cancelqr" class="divider-text">Create Session &nbsp;&nbsp;<i class="fa-solid fa-arrow-right"></i></div>
+							</div>
+						</div>
+						<div class="card-body" id="socket-qr" style="min-height: 200px">
+							<div id="logger">
+								<% if (loggerPath) { %>
+								<script>
+									fetch(`<%= loggerPath %>`)
+										.then((res) => res.text())
+										.then((data) => appendData(data));
+									function appendData(data) {
+										var mainContainer = document.getElementById("logger");
+										var div = document.createElement("div");
+										let c = data.split("\n");
+										let d = c.map((el, index) => {
+											el = `${el}<br />`;
+											return el;
+										});
+
+										div.innerHTML = `<div style="color: white; font-family: courier; background: black; display: flex; overflow-x: scroll; max-height: 375px" class="scroll">
+				<p style="margin-left: 15px; font-size: 14px;"> ${d.reverse().join("")}</p></div>`;
+										mainContainer.appendChild(div);
+									}
+								</script>
+								<% } else { %>
+								<center>
+									<p>Create Your Session Now!</p>
+								</center>
+								<% } %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-12 col-lg-3">
+			<div class="card">
+				<div class="card-body py-4-5 px-4">
+					<div class="d-flex align-items-center">
+						<div class="avatar avatar-xl">
+							<img src="/image/profile.jpg" alt="Face 1" />
+						</div>
+						<div class="ms-3 name">
+							<h5 class="font-bold">Zekais</h5>
+							<a href="https://api.whatsapp.com/send/?phone=6287715579966&text&app_absent=0" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i>&nbsp; WhatsApp</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h4>Create Session</h4>
+				</div>
+				<div class="card-content">
+					<div class="recent-message px-4 py-3">
+						<form action="/session/create-session" method="post">
+							<center>
+								<div class="form-group">
+									<input type="text" name="session_name" class="form-control" placeholder="Session Name" required />
+								</div>
+								<div class="pb-4"></div>
+								<button class="btn btn-primary">
+									<i class="fa-solid fa-qrcode"></i>
+									&nbsp Create
+								</button>
+							</center>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h4>Session Active</h4>
+				</div>
+				<div class="card-content">
+					<div class="recent-message px-4 py-3">
+						<% if (session) { %>
+						<center>
+							<p id="nameSession"><strong><%= session.session_name %></strong></p>
+							<p id="numberSession"><small><%= session.session_number %></small></p>
+							<p id="statusSession"><small><%= session.status %></small></p>
+							<div id="buttonSession">
+								<% if (session.status == 'CONNECTED') { %>
+								<button class="btn btn-warning" style="margin-top: 5px" onclick="alertStopSession('<%= session.session_name %>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Stop Session">
+									<i class="fa-solid fa-stop"></i>&nbsp;&nbsp; Stop Session
+								</button>
+								<% } else { %>
+								<button class="btn btn-primary" style="margin-top: 5px" onclick="alertStartSession('<%= session.session_name %>')" data-bs-toggle="tooltip" data-bs-placement="top" title="Start Session">
+									<i class="fa-solid fa-play"></i>&nbsp;&nbsp; Start Session
+								</button>
+								<% } %>
+							</div>
+							<div id="deleteSession">
+								<a href="/session/delete-session/<%= session.session_name %>" style="margin-top: 5px" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Session"
+									><i class="fa-solid fa-trash-can"></i>&nbsp;&nbsp; Delete Session</a
+								>
+							</div>
+						</center>
+						<% } else { %>
+						<center>
+							<div id="sessionCreate">
+								<p>No Session Active</p>
+							</div>
+						</center>
+						<% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+<footer>
+	<div class="divider">
+		<div class="divider-text">
+			<a href="https://github.com/fawwaz37/whatsapp-gateway" target="_blank">Zekais - 2022 &copy; Mazer</a>
+		</div>
+	</div>
+</footer>
+
+<script>
+	const socket = io.connect(`<%= process.env.HOST %>`);
+
+	socket.on("connection-status", (event) => {
+		$("#cancelqr").html(`Alert Status!`);
+		if (event.result) {
+			$("#socket-qr").html(`<center><p>${event.result}</p></center>`);
+		}
+	});
+
+	socket.on(`update-qr`, (event) => {
+		$("#cancelqr").html(`<a href="/session/cancelqr?id=${event.session_name}" style="text-align: center" class="btn btn-danger"><i class="fas fa-ban"></i>&nbsp Cancel QR</a>`);
+		$("#socket-qr").html(`<center><img class="img-fluid" src="data:image/png;base64,${event.buffer}" alt="" /></center>`);
+	});
+
+	socket.on("logger", (event) => {
+		let c = event.result.split("\n");
+		let d = c.map((el, index) => {
+			el = `${el}<br />`;
+			return el;
+		});
+		let hasil = d.reverse().join("");
+		$("#cancelqr").html(`Create Session &nbsp;&nbsp;<i class="fa-solid fa-arrow-right"></i>`);
+		$("#socket-qr").html(`<div style="color: white; font-family: courier; background: black; display: flex; overflow-x: scroll; max-height: 375px" class="scroll"><p style="margin-left: 15px; font-size: 14px;"> ${hasil}</p></div>`);
+		$("#sessionCreate").html(
+			`<p id="nameSession"><strong>${event.session_name}</strong></p><p id="numberSession"><small>${event.session_number}</small></p><p id="statusSession"><small>${event.status}</small></p><div id="buttonSession"><button class="btn btn-warning" style="margin-top: 5px" onclick="alertStopSession('${event.session_name}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Stop Session"><i class="fa-solid fa-stop"></i>&nbsp;&nbsp; Stop Session</button></div><div id="deleteSession"><a href="/session/delete-session/${event.session_name}" style="margin-top: 5px" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Session"><i class="fa-solid fa-trash-can"></i>&nbsp;&nbsp; Delete Session</a></div>`
+		);
+	});
+
+	socket.on(`session-status`, (event) => {
+		$("#statusSession").html(`<small>${event.status}</small>`);
+		if (event.status == "CONNECTED") {
+			$("#buttonSession").html(
+				`<button class="btn btn-warning" style="margin-top: 5px" onclick="alertStopSession('${event.session_name}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Stop Session"><i class="fa-solid fa-stop"></i>&nbsp;&nbsp; Stop Session</button>`
+			);
+		} else if (event.status == "STOPPED") {
+			$("#buttonSession").html(
+				`<button class="btn btn-primary" style="margin-top: 5px" onclick="alertStartSession('${event.session_name}')" data-bs-toggle="tooltip" data-bs-placement="top" title="Start Session"><i class="fa-solid fa-play"></i>&nbsp;&nbsp; Start Session</button>`
+			);
+		}
+	});
+
+	async function alertStartSession(session_name) {
+		Swal.fire({
+			title: `Start Session`,
+			html: `Are You Sure Start Session ${session_name}?`,
+			icon: "question",
+			confirmButtonText: `Start Session`,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(`/session/start-session?session=${session_name}`)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.statusText);
+						}
+						return response.json();
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}!`);
+					});
+			},
+		}).then((result) => {
+			if (result.isConfirmed) {
+				if (result.value.status == 200) {
+					Swal.fire("Success!", JSON.stringify(result.value.message), "success");
+				} else {
+					Swal.fire(`Status ${result.value.status}`, JSON.stringify(result.value.message), "error");
+				}
+			}
+		});
+	}
+
+	async function alertStopSession(session_name) {
+		Swal.fire({
+			title: `Stop Session`,
+			html: `Are You Sure Stop Session ${session_name}?`,
+			icon: "question",
+			confirmButtonText: `Stop Session`,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(`/session/stop-session?session=${session_name}`)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.statusText);
+						}
+						return response.json();
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}!`);
+					});
+			},
+		}).then((result) => {
+			if (result.isConfirmed) {
+				if (result.value.status == 200) {
+					Swal.fire("Success!", JSON.stringify(result.value.message), "success");
+				} else {
+					Swal.fire(`Status ${result.value.status}`, JSON.stringify(result.value.message), "error");
+				}
+			}
+		});
+	}
+</script>

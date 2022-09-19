@@ -1,0 +1,146 @@
+<div class="main-content">
+	<div class="content-wrapper container">
+		<%- include('../layouts/alert') %>
+		<div class="page-heading">
+			<div class="page-title">
+				<div class="row">
+					<div class="col-12 col-md-6 order-md-1 order-last">
+						<h3>History Send Message</h3>
+						<p class="text-subtitle text-muted">Save the entire history of the messages you sent</p>
+					</div>
+					<div class="col-12 col-md-6 order-md-2 order-first">
+						<nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+								<li class="breadcrumb-item active" aria-current="page">History</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page-content">
+			<section class="section">
+				<div class="card">
+					<div class="card-header">
+						<h5 class="card-title">History Table</h5>
+						<center>
+							<button onclick="alertDeleteAllHistory()" style="margin-top: 5px" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Keyword">
+								<i class="fa-solid fa-trash-can"></i>&nbsp;&nbsp; Delete All History
+							</button>
+						</center>
+					</div>
+					<div class="card-body">
+						<div style="overflow-x: auto !important">
+							<table class="table" id="table1">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Session Name</th>
+										<th>Type</th>
+										<th>Target</th>
+										<th>Message</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<% if (Array.isArray(db) && db.length) { %> <% db.forEach((el, index) => { %>
+									<tr>
+										<td><%= el.date %></td>
+										<td><%= el.session_name %></td>
+										<td><%= el.type %></td>
+										<td><%= el.target %></td>
+										<td><%= el.caption %></td>
+										<td>
+											<button onclick="alertDeleteHistory('<%= el.id %>')" style="margin-top: 5px" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Keyword">
+												<i class="fa-solid fa-trash-can"></i>
+											</button>
+										</td>
+									</tr>
+									<% }); %> <% } %>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		<footer>
+			<div class="divider">
+				<div class="divider-text">
+					<a href="https://github.com/fawwaz37/whatsapp-gateway" target="_blank">Zekais - 2022 &copy; Mazer</a>
+				</div>
+			</div>
+		</footer>
+	</div>
+</div>
+
+<script src="/assets/extensions/jquery/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+<script src="/assets/js/pages/datatables.js"></script>
+
+<script>
+	async function alertDeleteHistory(id) {
+		Swal.fire({
+			title: `Delete History`,
+			html: `Are You Sure Delete This History?`,
+			icon: "question",
+			confirmButtonText: `Delete`,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(`/api/del-history?id=${id}`)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.statusText);
+						}
+						return response.json();
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}!`);
+					});
+			},
+		}).then((result) => {
+			if (result.isConfirmed) {
+				if (result.value.status == 200) {
+					Swal.fire("Success!", JSON.stringify(result.value.message), "success").then(function () {
+						window.location = "/dashboard/history-message";
+					});
+				} else {
+					Swal.fire(`Status ${result.value.status}`, JSON.stringify(result.value.message), "error");
+				}
+			}
+		});
+	}
+
+	async function alertDeleteAllHistory() {
+		Swal.fire({
+			title: `Delete All History`,
+			html: `Are You Sure Delete All History?`,
+			icon: "question",
+			confirmButtonText: `Delete All`,
+			showLoaderOnConfirm: true,
+			preConfirm: () => {
+				return fetch(`/api/delall-history`)
+					.then((response) => {
+						if (!response.ok) {
+							throw new Error(response.statusText);
+						}
+						return response.json();
+					})
+					.catch((error) => {
+						Swal.showValidationMessage(`Request failed: ${error}!`);
+					});
+			},
+		}).then((result) => {
+			if (result.isConfirmed) {
+				if (result.value.status == 200) {
+					Swal.fire("Success!", JSON.stringify(result.value.message), "success").then(function () {
+						window.location = "/dashboard/history-message";
+					});
+				} else {
+					Swal.fire(`Status ${result.value.status}`, JSON.stringify(result.value.message), "error");
+				}
+			}
+		});
+	}
+</script>

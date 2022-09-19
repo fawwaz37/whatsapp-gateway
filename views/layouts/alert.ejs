@@ -1,0 +1,33 @@
+<% if (success_msg != '') { %>
+<script>
+	Swal.fire("Success", "<%- success_msg %>", "success");
+</script>
+<% } %> <% if (error_msg != '') { %>
+<script>
+	Swal.fire("Oops...", "<%- error_msg %>", "error");
+</script>
+<% } %> <% if (side != '') { %>
+<script>
+	let timerInterval;
+	Swal.fire({
+		title: "<%- side %>",
+		html: "Close in <b></b> milliseconds.",
+		timer: 4000,
+		timerProgressBar: true,
+		didOpen: () => {
+			Swal.showLoading();
+			const b = Swal.getHtmlContainer().querySelector("b");
+			timerInterval = setInterval(() => {
+				b.textContent = Swal.getTimerLeft();
+			}, 100);
+		},
+		willClose: () => {
+			clearInterval(timerInterval);
+		},
+	}).then((result) => {
+		if (result.dismiss === Swal.DismissReason.timer) {
+			console.log("I was closed by the timer");
+		}
+	});
+</script>
+<% } %>

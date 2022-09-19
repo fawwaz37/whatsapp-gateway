@@ -1,0 +1,78 @@
+<div id="sidebar" class="active">
+	<div class="sidebar-wrapper active">
+		<div class="sidebar-header position-relative">
+			<div class="d-flex justify-content-between align-items-center">
+				<div class="logo">
+					<a href="/"><img src="/assets/images/logo/logo.svg" alt="Logo" srcset="" /></a>
+				</div>
+				<div class="theme-toggle d-flex gap-2 align-items-center mt-2">
+					<i class="fa-regular fa-sun fa-xs"></i>
+					<div class="form-check form-switch fs-6">
+						<input class="form-check-input me-0" type="checkbox" id="toggle-dark" />
+						<label class="form-check-label"></label>
+					</div>
+					<i class="fa-regular fa-moon fa-xs"></i>
+				</div>
+				<div class="sidebar-toggler x">
+					<a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+				</div>
+			</div>
+		</div>
+		<div class="sidebar-menu">
+			<ul class="menu">
+				<li class="sidebar-title">Menu</li>
+
+				<li class="sidebar-item <% if (url == '/dashboard') { %> active <% } %>">
+					<a href="/dashboard" class="sidebar-link">
+						<i class="fa-solid fa-table-columns"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+
+				<li class="sidebar-item <% if (url == '/dashboard/send-message') { %> active <% } %>">
+					<a href="/dashboard/send-message" class="sidebar-link">
+						<i class="fa-solid fa-paper-plane"></i>
+						<span>Send Message</span>
+					</a>
+				</li>
+
+				<li class="sidebar-item <% if (url == '/dashboard/history-message') { %> active <% } %>">
+					<a href="/dashboard/history-message" class="sidebar-link">
+						<i class="fa-solid fa-clock-rotate-left"></i>
+						<span>History Send Message</span>
+					</a>
+				</li>
+
+				<li class="sidebar-item <% if (url == '/dashboard/auto-reply') { %> active <% } %>">
+					<a href="/dashboard/auto-reply" class="sidebar-link">
+						<i class="fa-solid fa-reply"></i>
+						<span>Auto Reply</span>
+					</a>
+				</li>
+
+				<li class="sidebar-item <% if (url == '/dashboard/api-doc') { %> active <% } %>">
+					<a href="/dashboard/api-doc" class="sidebar-link">
+						<i class="fa-solid fa-network-wired"></i>
+						<span>API Doc</span>
+					</a>
+				</li>
+
+				<li class="sidebar-title">Others</li>
+
+				<li class="sidebar-item">
+					<a href="https://api.whatsapp.com/send/?phone=6287715579966&text&app_absent=0" target="_blank" class="sidebar-link">
+						<i class="fab fa-whatsapp"></i>
+						<span>Contact</span>
+					</a>
+				</li>
+
+				<li class="sidebar-item">
+					<a href="https://github.com/fawwaz37/whatsapp-gateway" target="_blank" class="sidebar-link">
+						<i class="fa-brands fa-github"></i>
+						<span>Repository</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
