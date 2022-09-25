@@ -46,7 +46,7 @@ class App {
 
 	route() {
 		this.app.get("/", (req, res) => {
-			res.send("okeee");
+			res.redirect("/dashboard");
 		});
 
 		this.app.use("/dashboard", routerDashboard);
