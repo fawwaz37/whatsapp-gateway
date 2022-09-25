@@ -101,5 +101,4 @@ dist
 # TernJS port file
 .tern-port
 
-src/session
 Database2.js
