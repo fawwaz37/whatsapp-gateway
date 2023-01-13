@@ -5,6 +5,7 @@ import { modules } from "../../lib/index.js";
 import SessionDatabase from "../database/db/session.db.js";
 import ConnectionSession from "../session/Session.js";
 import App from "./App.js";
+import { connectDatabase } from "./Database.js";
 
 const server = new App();
 
@@ -13,6 +14,7 @@ moment.tz.setDefault("Asia/Jakarta").locale("id");
 const { SESSION_NAME, AUTO_START } = process.env;
 
 const serverHttp = server.app.listen(server.PORT, async () => {
+	await connectDatabase();
 	if (AUTO_START == "y") {
 		await new ConnectionSession().createSession(SESSION_NAME);
 	} else {

@@ -9,7 +9,7 @@ const History = sequelize.define(
 			allowNull: false,
 		},
 		target: {
-			type: DataTypes.BIGINT(200),
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		type: {

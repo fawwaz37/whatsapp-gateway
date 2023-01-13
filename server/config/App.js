@@ -4,7 +4,7 @@ import flash from "connect-flash";
 import session from "express-session";
 import fileUpload from "express-fileupload";
 
-import { connectDatabase } from "./Database.js";
+// import { connectDatabase } from "./Database.js";
 import routerUser from "../router/session/session.router.js";
 import routerDashboard from "../router/dashboard/dashboard.router.js";
 import routerApi from "../router/api/api.router.js";
@@ -41,7 +41,7 @@ class App {
 			})
 		);
 
-		connectDatabase();
+		// connectDatabase();
 	}
 
 	route() {

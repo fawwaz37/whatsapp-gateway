@@ -37,6 +37,7 @@ class ConnectionSession extends SessionDatabase {
 		await modules.sleep(3000);
 		socket.emit(`update-qr`, { buffer: dataBase64, session_name });
 		this.count++;
+		console.log(modules.color("[SYS]", "#EB6112"), modules.color(`[Session: ${session_name}] Open the browser, a qr has appeared on the website, scan it now!`, "#E6B0AA"));
 		console.log(this.count);
 	}
 
@@ -71,7 +72,7 @@ class ConnectionSession extends SessionDatabase {
 			if (this.count >= 3) {
 				this.deleteSession(session_name);
 				socket.emit("connection-status", { session_name, result: "No Response, QR Scan Canceled" });
-				console.log(`count : `, this.count);
+				console.log(`Count : ${this.count}, QR Stopped!`);
 				client.ev.removeAllListeners("connection.update");
 				return;
 			}

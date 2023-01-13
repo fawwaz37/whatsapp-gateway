@@ -9,6 +9,8 @@ router.get("/", (req, res) => {
 	res.send("okee");
 });
 
+router.get("/session", controller.getSessions.bind(controller));
+
 router.post("/sendtext", controller.sendText.bind(controller));
 router.post("/sendmedia", controller.sendMedia.bind(controller));
 router.post("/sendsticker", controller.sendSticker.bind(controller));

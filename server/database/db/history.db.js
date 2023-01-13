@@ -8,7 +8,7 @@ class HistoryMessage {
 
 	async pushNewMessage(session_name, type, target, caption) {
 		let date = moment().format("DD/MM/YY HH:mm:ss");
-		await this.history.create({ session_name, type, target, date, caption });
+		await this.history.create({ session_name, target, type, date, caption });
 	}
 
 	async getAllMessage() {

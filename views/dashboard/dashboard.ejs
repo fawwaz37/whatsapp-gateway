@@ -151,7 +151,7 @@
 	});
 
 	socket.on(`update-qr`, (event) => {
-		$("#cancelqr").html(`<a href="/session/cancelqr?id=${event.session_name}" style="text-align: center" class="btn btn-danger"><i class="fas fa-ban"></i>&nbsp Cancel QR</a>`);
+		// $("#cancelqr").html(`<a href="/session/cancelqr?id=${event.session_name}" style="text-align: center" class="btn btn-danger"><i class="fas fa-ban"></i>&nbsp Cancel QR</a>`);
 		$("#socket-qr").html(`<center><img class="img-fluid" src="data:image/png;base64,${event.buffer}" alt="" /></center>`);
 	});
 

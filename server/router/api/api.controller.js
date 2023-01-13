@@ -6,6 +6,7 @@ import Client from "../../session/Client/handler/Client.js";
 import ConnectionSession from "../../session/Session.js";
 import { ButtonResponse, ListResponse } from "../../database/db/messageRespon.db.js";
 import HistoryMessage from "../../database/db/history.db.js";
+import History from "../../database/models/history.model.js";
 
 class ControllerApi extends ConnectionSession {
 	constructor() {
@@ -371,6 +372,24 @@ class ControllerApi extends ConnectionSession {
 		try {
 			await this.history.deleteAllHistory();
 			return res.send({ status: 200, message: `Success Delete All History Send Message` });
+		} catch (error) {
+			console.log(error);
+			return res.send({ status: 500, message: "Internal Server Error" });
+		}
+	}
+
+	async getSessions(req, res) {
+		try {
+			const data = await this.session.findAll({
+				include: [
+					{
+						model: History,
+					},
+				],
+			});
+			return res.status(200).send({
+				data,
+			});
 		} catch (error) {
 			console.log(error);
 			return res.send({ status: 500, message: "Internal Server Error" });

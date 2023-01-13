@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../config/Database.js";
+import History from "./history.model.js";
 
 const Session = sequelize.define(
 	"Session",
@@ -7,10 +8,11 @@ const Session = sequelize.define(
 		session_name: {
 			type: DataTypes.STRING,
 			unique: true,
+			primaryKey: true,
 			allowNull: false,
 		},
 		session_number: {
-			type: DataTypes.BIGINT(200),
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		status: {
@@ -20,5 +22,10 @@ const Session = sequelize.define(
 	},
 	{ tableName: "sessions", timestamps: true }
 );
+
+Session.removeAttribute("id");
+
+Session.hasMany(History, { foreignKey: "session_name" });
+History.belongsTo(Session, { foreignKey: "session_name" });
 
 export default Session;
