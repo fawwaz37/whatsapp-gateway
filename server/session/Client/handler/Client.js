@@ -1,4 +1,4 @@
-import pkg, { downloadContentFromMessage, toBuffer } from "@adiwajshing/baileys";
+import pkg, { downloadContentFromMessage, toBuffer } from "@whiskeysockets/baileys";
 import axios from "axios";
 import fs from "fs";
 
