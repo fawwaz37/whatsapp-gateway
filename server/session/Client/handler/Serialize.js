@@ -1,4 +1,4 @@
-import { downloadContentFromMessage, getContentType, getDevice, isJidBroadcast, isJidGroup, jidNormalizedUser, toBuffer } from "@adiwajshing/baileys";
+import { downloadContentFromMessage, getContentType, getDevice, isJidBroadcast, isJidGroup, jidNormalizedUser, toBuffer } from "@whiskeysockets/baileys";
 import fs from "fs";
 import { moment } from "../../../config/index.js";
 import Client from "./Client.js";
