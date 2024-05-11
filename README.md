@@ -15,8 +15,6 @@ Simple WhatsApp Gateway, Built Using Baileys, Express, Sequelize + [Mazer](https
 
 # Note
 
-This is just a **simple version**, if you want **more versions** visit https://wasup.masterforexid.com/
-
 If you want to **request a feature**, contact my number wa.me/6287715579966
 
 Because there are no other features added to this free repo
