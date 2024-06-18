@@ -1,8 +1,8 @@
-import pkg, { downloadContentFromMessage, toBuffer } from "@whiskeysockets/baileys";
-import axios from "axios";
-import fs from "fs";
+const pkg = require("@whiskeysockets/baileys");
+const axios = require("axios");
+const fs = require("fs");
 
-const { generateThumbnail, generateWAMessageFromContent, prepareWAMessageMedia, proto } = pkg;
+const { generateThumbnail, generateWAMessageFromContent, prepareWAMessageMedia, proto, downloadContentFromMessage, toBuffer } = pkg;
 
 class Client {
   constructor(client, target) {
@@ -232,4 +232,4 @@ class Client {
   }
 }
 
-export default Client;
+module.exports = Client;

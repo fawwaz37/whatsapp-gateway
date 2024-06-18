@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import ControllerUser from "./session.controller.js";
+const ControllerUser = require("./session.controller.js");
 
 const controller = new ControllerUser();
 
@@ -10,4 +10,4 @@ router.get("/start-session", controller.startOneSession.bind(controller));
 router.get("/stop-session", controller.stopOneSession.bind(controller));
 router.get("/delete-session/:session", controller.deleteUserSession.bind(controller));
 
-export default router;
+module.exports = router;

@@ -1,51 +1,50 @@
 {
-	"name": "whatsapp-gateway",
-	"version": "1.0.0",
-	"description": "Simple WhatsApp Gateway, Built Using Baileys, Express, Sequelize & mazer",
-	"main": "./server/config/index.js",
-	"type": "module",
-	"scripts": {
-		"start": "node ./server/config/index.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/fawwaz37/whatsapp-gateway.git"
-	},
-	"keywords": [
-		"express",
-		"api",
-		"bot",
-		"whatsapp-gateway",
-		"whatsapp bot",
-		"mysql",
-		"express",
-		"nodejs"
-	],
-	"author": "zekais",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/fawwaz37/whatsapp-gateway/issues"
-	},
-	"homepage": "https://github.com/fawwaz37/whatsapp-gateway#readme",
-	"dependencies": {
-		"@adiwajshing/keyed-db": "^0.2.4",
-		"@hapi/boom": "^10.0.0",
-		"@whiskeysockets/baileys": "^6.4.1",
-		"axios": "^0.27.2",
-		"chalk": "^5.0.1",
-		"connect-flash": "^0.1.1",
-		"dotenv": "^16.0.1",
-		"ejs": "^3.1.8",
-		"express": "^4.18.1",
-		"express-ejs-layouts": "^2.5.1",
-		"express-fileupload": "^1.4.0",
-		"express-session": "^1.17.3",
-		"moment-timezone": "^0.5.37",
-		"mysql2": "^2.3.3",
-		"pino": "^8.0.0",
-		"qrcode": "^1.5.1",
-		"sequelize": "^6.21.3",
-		"sharp": "^0.30.7",
-		"socket.io": "^4.5.1"
-	}
+  "name": "whatsapp-gateway",
+  "version": "1.0.0",
+  "description": "Simple WhatsApp Gateway, Built Using Baileys, Express, Sequelize & mazer",
+  "main": "./server/config/index.js",
+  "scripts": {
+    "start": "node ./server/config/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fawwaz37/whatsapp-gateway.git"
+  },
+  "keywords": [
+    "express",
+    "api",
+    "bot",
+    "whatsapp-gateway",
+    "whatsapp bot",
+    "mysql",
+    "express",
+    "nodejs"
+  ],
+  "author": "zekais",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fawwaz37/whatsapp-gateway/issues"
+  },
+  "homepage": "https://github.com/fawwaz37/whatsapp-gateway#readme",
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@hapi/boom": "^10.0.0",
+    "@whiskeysockets/baileys": "^6.4.1",
+    "axios": "^0.27.2",
+    "chalk": "^5.0.1",
+    "connect-flash": "^0.1.1",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-ejs-layouts": "^2.5.1",
+    "express-fileupload": "^1.4.0",
+    "express-session": "^1.17.3",
+    "moment-timezone": "^0.5.37",
+    "mysql2": "^2.3.3",
+    "pino": "^8.0.0",
+    "qrcode": "^1.5.1",
+    "sequelize": "^6.21.3",
+    "sharp": "^0.30.7",
+    "socket.io": "^4.5.1"
+  }
 }

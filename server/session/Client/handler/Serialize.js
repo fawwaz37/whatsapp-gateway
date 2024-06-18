@@ -1,4 +1,4 @@
-import {
+const {
   downloadContentFromMessage,
   getContentType,
   getDevice,
@@ -6,14 +6,14 @@ import {
   isJidGroup,
   jidNormalizedUser,
   toBuffer,
-} from "@whiskeysockets/baileys";
-import fs from "fs";
-import { moment } from "../../../config/index.js";
-import Client from "./Client.js";
+} = require("@whiskeysockets/baileys");
+const fs = require("fs");
+const { moment } = require("../../../../lib/moment.js");
+const Client = require("./Client.js");
 
 const { PREFIX } = process.env;
 
-export default class Serialize extends Client {
+module.exports = class Serialize extends Client {
   constructor() {
     super();
   }
@@ -138,4 +138,4 @@ export default class Serialize extends Client {
       return null;
     }
   }
-}
+};

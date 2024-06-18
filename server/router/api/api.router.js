@@ -1,12 +1,12 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import ControllerApi from "./api.controller.js";
+const ControllerApi = require("./api.controller.js");
 
 const controller = new ControllerApi();
 
 router.get("/", (req, res) => {
-	res.send("okee");
+  res.send("okee");
 });
 
 router.get("/session", controller.getSessions.bind(controller));
@@ -23,4 +23,4 @@ router.post("/sendproduct", controller.sendProduct.bind(controller));
 router.get("/del-history", controller.deleteHistory.bind(controller));
 router.get("/delall-history", controller.deleteAllHistory.bind(controller));
 
-export default router;
+module.exports = router;

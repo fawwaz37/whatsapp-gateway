@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import ControllerAutoReply from "./autoReply.controller.js";
+const ControllerAutoReply = require("./autoReply.controller.js");
 
 const controller = new ControllerAutoReply();
 
@@ -10,4 +10,4 @@ router.post("/edit-reply", controller.editReply.bind(controller));
 router.get("/delete-reply", controller.deleteReply.bind(controller));
 router.get("/deleteall-reply", controller.deleteAllReply.bind(controller));
 
-export default router;
+module.exports = router;

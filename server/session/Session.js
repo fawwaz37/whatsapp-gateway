@@ -1,12 +1,23 @@
-import WASocket, { Browsers, DisconnectReason, fetchLatestBaileysVersion, makeInMemoryStore, useMultiFileAuthState } from "@whiskeysockets/baileys";
-import { Boom } from "@hapi/boom";
-import pino from "pino";
-import qrcode from "qrcode";
-import fs from "fs";
-import { modules } from "../../lib/index.js";
-import { socket, moment } from "../config/index.js";
-import SessionDatabase from "../database/db/session.db.js";
-import Message from "./Client/handler/Message.js";
+const {
+  default: WASocket,
+  Browsers,
+  DisconnectReason,
+  fetchLatestBaileysVersion,
+  makeInMemoryStore,
+  useMultiFileAuthState,
+} = require("@whiskeysockets/baileys");
+const { Boom } = require("@hapi/boom");
+const pino = require("pino");
+const qrcode = require("qrcode");
+const fs = require("fs");
+const { modules } = require("../../lib/index.js");
+const { moment } = require("../../lib/moment.js");
+const SessionDatabase = require("../database/db/session.db.js");
+const Message = require("./Client/handler/Message.js");
+
+// const { socket } = require("../config/index.js");
+const Socket = require("../config/socket.js");
+const socket = Socket;
 
 const { SESSION_PATH, LOG_PATH } = process.env;
 let sessions = {};
@@ -61,7 +72,7 @@ class ConnectionSession extends SessionDatabase {
     const store = makeInMemoryStore({});
     store.readFromFile(storePath);
 
-    const client = WASocket.default(options);
+    const client = WASocket(options);
 
     store.readFromFile(storePath);
     setInterval(() => {
@@ -175,4 +186,4 @@ class ConnectionSession extends SessionDatabase {
   }
 }
 
-export default ConnectionSession;
+module.exports = ConnectionSession;
